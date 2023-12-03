@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import os
 import openai
 import sys
@@ -7,21 +5,24 @@ import common.blog_message as blog_message
 
 
 # 评论页面
-url = os.environ.get("COMMENTS_URL")
+url = os.environ.get("COMMENTS_URL_DALLE")
 # 博客id
-post_id = os.environ.get("POST_ID")
+post_id = os.environ.get("POST_ID_DALLE")
 
 
-def get_openai_response(api_key, messages):
+def get_dalle_response(api_key, messages):
     openai.api_key = api_key
     openai.default_headers = {"x-foo": "true"}
 
-    completion = openai.chat.completions.create(
-        model = "gpt-3.5-turbo",
-        messages = messages,
-    )
-    return completion.choices[0].message.content
+    # dall.e目前只接受最后一条信息，不接受历史评论
+    message = messages[-1]['content']
+    print("Message is " + message)
 
+    response = openai.Image.create(
+        prompt = message,
+    )
+
+    return '<img src="' + response.data[0].url +'"/>'
 
 
 if __name__ =="__main__":
@@ -41,7 +42,7 @@ if __name__ =="__main__":
             'role': message['role'],
             'content': message['content']
         })
-        response = get_openai_response(api_key, messages_for_send)
+        response = get_dalle_response(api_key, messages_for_send)
         print("Key is " + str(key))
         print("Response is "+ response)
 

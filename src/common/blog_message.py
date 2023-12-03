@@ -2,15 +2,10 @@ import os
 import requests
 import re
 import uuid
-import html
 import time
 
-# 评论页面
-url = os.environ.get("COMMENTS_URL")
-# 博客id
-post_id = os.environ.get("POST_ID")
 
-def get_messages():
+def get_messages(url: str, post_id: str):
     response=requests.get(url + "?per_page=100&post=" + post_id)
     if response.status_code != 200:
         print("Http response error, code is: " + response.status_code)
@@ -60,7 +55,7 @@ def get_messages():
     msg_dict = msg_dict2
     return msg_dict
 
-def message_write_back(parent, message):
+def message_write_back(parent, message, url: str, post_id: str):
     # 对发回的数据进行清洗
     message = sent_back_message_wash(message)
     message = message_match_code(message)
@@ -94,7 +89,8 @@ def sent_back_message_wash(message: str):
         "div", "p", "span", "hr", "br","br/", "h[1,6]",
         "b", "strong", "i", "em", "u", "del", "sub", "sup",
         "ul", "ol", "li", "dl", "dt", "dd",
-        'a href="[^"]*"', "a"
+        'a href="[^"]*"', "a",
+        'img src="[^"]*"', "img"
     ]
     allow_html_tag_list=[]
     for tag in allow_html_tags:
