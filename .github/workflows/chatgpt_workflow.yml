@@ -29,7 +29,7 @@ jobs:
     - name: Pip install
       run: |
         python --version
-        pip install --upgrade openai
+        pip install openai==0.28
         pip install --upgrade requests
     - name: Run gpt_send.py
       run: |
@@ -37,4 +37,4 @@ jobs:
         export POST_ID=$POST_ID
         export WP_LELE_USERNAME=$WP_LELE_USERNAME
         export WP_LELE_PASSWORD=$WP_LELE_PASSWORD
-        python src/chatgpt/gpt_send.py $OPENAI_API_KEY
+        python src/gpt_send.py $OPENAI_API_KEY

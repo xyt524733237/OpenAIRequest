@@ -86,7 +86,7 @@ def sent_back_message_wash(message: str):
     # 允许的html标签
     allow_html_tags = [
         "pre", "code",
-        "div", "p", "span", "hr", "br","br/", "h[1,6]",
+        "div", "p", "span", "hr", "br", "h[1,6]",
         "b", "strong", "i", "em", "u", "del", "sub", "sup",
         "ul", "ol", "li", "dl", "dt", "dd",
         'a href="[^"]*"', "a",
@@ -96,6 +96,7 @@ def sent_back_message_wash(message: str):
     for tag in allow_html_tags:
         allow_html_tag_list.append("<"+ tag +">")
         allow_html_tag_list.append("</"+ tag +">")
+        allow_html_tag_list.append("<"+ tag +"/>")
     pattern_str = '|'.join(allow_html_tag_list)
     partten = re.compile(pattern_str)
     left_token = "left-" + str(uuid.uuid4())

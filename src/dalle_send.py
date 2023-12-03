@@ -1,13 +1,15 @@
+#!/usr/bin/env python
+
 import os
 import openai
 import sys
-import common.blog_message as blog_message
+from common import blog_message as blog_message
 
 
 # 评论页面
-url = os.environ.get("COMMENTS_URL_DALLE")
+url = os.environ.get("COMMENTS_URL")
 # 博客id
-post_id = os.environ.get("POST_ID_DALLE")
+post_id = os.environ.get("POST_ID")
 
 
 def get_dalle_response(api_key, messages):

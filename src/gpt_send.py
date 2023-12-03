@@ -3,7 +3,7 @@
 import os
 import openai
 import sys
-import common.blog_message as blog_message
+from common import blog_message as blog_message
 
 
 # 评论页面

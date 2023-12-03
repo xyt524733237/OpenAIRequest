@@ -23,13 +23,13 @@ jobs:
       run: |
         echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
         echo "COMMENTS_URL=${{ secrets.COMMENTS_URL }}" >> $GITHUB_ENV
-        echo "POST_ID=${{ secrets.POST_ID }}" >> $GITHUB_ENV
+        echo "POST_ID=${{ secrets.POST_ID_DALLE }}" >> $GITHUB_ENV
         echo "WP_LELE_USERNAME=${{ secrets.WP_LELE_USERNAME }}" >> $GITHUB_ENV
         echo "WP_LELE_PASSWORD=${{ secrets.WP_LELE_PASSWORD }}" >> $GITHUB_ENV
     - name: Pip install
       run: |
         python --version
-        pip install --upgrade openai
+        pip install openai==0.28
         pip install --upgrade requests
     - name: Run dalle_send.py
       run: |
@@ -37,4 +37,4 @@ jobs:
         export POST_ID=$POST_ID
         export WP_LELE_USERNAME=$WP_LELE_USERNAME
         export WP_LELE_PASSWORD=$WP_LELE_PASSWORD
-        python src/chatgpt/dalle_send.py $OPENAI_API_KEY
+        python src/dalle_send.py $OPENAI_API_KEY
